@@ -1,3 +1,13 @@
+front:
+    resource: "@FrontBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+back:
+    resource: "@BackBundle/Controller/"
+    type:     annotation
+    prefix:   /back
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
