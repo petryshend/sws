@@ -5,13 +5,13 @@ namespace BackBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class DefaultController extends Controller
+class ProductController extends Controller
 {
     /**
      * @Route("/")
      */
     public function indexAction()
     {
-        return $this->render('BackBundle:Default:index.html.twig');
+        return $this->render('@Back/index.html.twig');
     }
 }
