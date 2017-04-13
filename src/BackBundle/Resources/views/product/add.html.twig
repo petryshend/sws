@@ -1,33 +1,5 @@
 {% extends '@Back/base.html.twig' %}
 
 {% block body %}
-
-    {{ form_start(form) }}
-
-    <div>
-        {{ form_label(form.name) }}
-        {{ form_errors(form.name) }}
-        {{ form_widget(form.name) }}
-    </div>
-    <div>
-        {{ form_label(form.price) }}
-        {{ form_errors(form.price) }}
-        {{ form_widget(form.price) }}
-    </div>
-    <div>
-        {{ form_label(form.description) }}
-        {{ form_errors(form.description) }}
-        {{ form_widget(form.description) }}
-    </div>
-    <div>
-        {{ form_label(form.image) }}
-        {{ form_errors(form.image) }}
-        {{ form_widget(form.image) }}
-    </div>
-    <div>
-        {{ form_widget(form.save) }}
-    </div>
-
-    {{ form_end(form) }}
-
+    {% include '@Back/_partial/product_form.html.twig' with {'form': form} %}
 {% endblock %}
