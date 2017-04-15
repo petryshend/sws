@@ -6,6 +6,7 @@ use BackBundle\Entity\Product;
 use BackBundle\Form\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -71,7 +72,28 @@ class ProductController extends Controller
 
         return $this->render('@Back/product/edit.html.twig', [
             'form' => $form->createView(),
+            'product' => $product,
         ]);
+    }
+
+    /**
+     * @Route(
+     *     "product/{id}/delete",
+     *     name="product_delete",
+     *     requirements={"id"="\d+"}
+     * )
+     * @Method({"POST"})
+     * @param int $id
+     * @return Response
+     */
+    public function deleteAction(int $id): Response
+    {
+        $product = $this->getDoctrine()->getRepository('BackBundle:Product')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($product);
+        $em->flush();
+
+        return $this->redirectToRoute('product_list');
     }
 
     private function persistProduct(Product $product)

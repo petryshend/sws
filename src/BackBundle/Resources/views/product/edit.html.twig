@@ -2,4 +2,7 @@
 
 {% block body %}
     {% include '@Back/_partial/product_form.html.twig' with {'form': form} %}
+    <form method="post" action="{{ path('product_delete', {'id': product.id}) }}">
+        <button class="btn btn-danger" type="submit">Delete product</button>
+    </form>
 {% endblock %}
