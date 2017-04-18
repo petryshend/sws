@@ -33,7 +33,7 @@ class LoadProducts implements FixtureInterface
             $product = new Product();
             $product->setName('Test Product #' . $i);
             $product->setDescription('Description of product #' . $i);
-            $product->setImage('test_product_' . $i . '.jpg');
+            $product->setImage('test_product_image.jpeg');
             $product->setPrice(rand(1, 10000) / 100);
             $products[] = $product;
         }
