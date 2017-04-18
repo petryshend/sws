@@ -7,6 +7,8 @@ use BackBundle\Form\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -39,7 +41,14 @@ class ProductController extends Controller
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Product $product */
             $product = $form->getData();
+            /** @var UploadedFile $imageFile */
+            $imageFile = $product->getImage();
+            $imageFileName = md5(uniqid()) . '.' . $imageFile->guessExtension();
+            $imageFile->move($this->getParameter('product_images_directory'), $imageFileName);
+            $product->setImage($imageFileName);
+
             $this->persistProduct($product);
             return $this->redirectToRoute('product_list');
         }
@@ -62,6 +71,7 @@ class ProductController extends Controller
     public function editAction(Request $request, int $id): Response
     {
         $product = $this->getDoctrine()->getRepository('BackBundle:Product')->find($id);
+        $product->setImage(new File($this->getParameter('product_images_directory') . '/' . $product->getImage()));
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

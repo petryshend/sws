@@ -3,6 +3,7 @@
 namespace BackBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -37,6 +38,7 @@ class Product
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @Assert\Image()
      */
     private $image;
 
@@ -123,11 +125,8 @@ class Product
     }
 
     /**
-     * Set image
-     *
-     * @param string $image
-     *
-     * @return Product
+     * @param File|string $image
+     * @return $this
      */
     public function setImage($image)
     {
@@ -137,9 +136,7 @@ class Product
     }
 
     /**
-     * Get image
-     *
-     * @return string
+     * @return File|string
      */
     public function getImage()
     {
